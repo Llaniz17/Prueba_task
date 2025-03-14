@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="card shadow-sm p-4">
+    <h2 class="mb-3">Detalles de la Tarea</h2>
+
+    <!-- Formulario de Edición -->
+    <form method="POST" class="mb-3">
+        {% csrf_token %}
+        
+        <div class="mb-3">
+            <label for="id_title" class="form-label">Título:</label>
+            <input type="text" name="title" id="id_title" class="form-control" value="{{ form.title.value }}" required>
+            {% if form.title.errors %}
+                <div class="text-danger">{{ form.title.errors }}</div>
+            {% endif %}
+        </div>
+
+        <div class="mb-3">
+            <label for="id_description" class="form-label">Descripción:</label>
+            <textarea name="description" id="id_description" class="form-control">{{ form.description.value }}</textarea>
+            {% if form.description.errors %}
+                <div class="text-danger">{{ form.description.errors }}</div>
+            {% endif %}
+        </div>
+
+        <div class="mb-3">
+            <label for="id_due_date" class="form-label">Fecha de vencimiento:</label>
+            <input type="date" name="due_date" id="id_due_date" class="form-control" value="{{ form.due_date.value|date:'Y-m-d' }}">
+            {% if form.due_date.errors %}
+                <div class="text-danger">{{ form.due_date.errors }}</div>
+            {% endif %}
+        </div>
+
+        <div class="mb-3">
+            <label for="id_city" class="form-label">Ciudad:</label>
+            <input type="text" name="city" id="id_city" class="form-control" value="{{ form.city.value }}">
+            {% if form.city.errors %}
+                <div class="text-danger">{{ form.city.errors }}</div>
+            {% endif %}
+        </div>
+
+        <button type="submit" class="btn btn-primary">💾 Guardar Cambios</button>
+    </form>
+
+    <!-- Sección del Clima -->
+    {% if task.city %}
+        <h4>Clima en {{ task.city }}</h4>
+        <div class="alert alert-info">
+            {% if weather %}
+                🌡️ Temperatura: <strong>{{ weather.temperature }}°C</strong><br>
+                💧 Humedad: <strong>{{ weather.humidity }}%</strong><br>
+                🌤️ Estado: <strong>{{ weather.description }}</strong>
+            {% elif weather_error %}
+                <p class="text-danger">{{ weather_error }}</p>
+            {% endif %}
+        </div>
+    {% endif %}
+
+    <div class="d-flex gap-2">
+        <!-- Botón de Completado -->
+        <form method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="toggle_completed">
+            {% if task.completed %}
+                <button type="submit" class="btn btn-warning">🔄 Desmarcar como Completada</button>
+            {% else %}
+                <button type="submit" class="btn btn-success">✔️ Marcar como Completada</button>
+            {% endif %}
+        </form>
+
+        <!-- Botón de Eliminación -->
+        <form method="POST" onsubmit="return confirm('¿Seguro que quieres eliminar esta tarea?');">
+            {% csrf_token %}
+            <input type="hidden" name="delete_task">
+            <button type="submit" class="btn btn-danger">❌ Eliminar</button>
+        </form>
+    </div>
+
+    <a href="{% url 'task_list' %}" class="btn btn-secondary mt-3">⬅️ Volver</a>
+</div>
+{% endblock %}

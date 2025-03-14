@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Lista de Tareas</h2>
+    <a href="{% url 'create_task' %}" class="btn btn-primary">➕ Nueva Tarea</a>
+</div>
+
+<form method="GET" class="mb-3">
+    <select name="completed" class="form-select w-50" onchange="this.form.submit()">
+        <option value="" {% if request.GET.completed == "" %}selected{% endif %}>Todas</option>
+        <option value="true" {% if request.GET.completed == "true" %}selected{% endif %}>Completadas</option>
+        <option value="false" {% if request.GET.completed == "false" %}selected{% endif %}>No Completadas</option>
+    </select>
+</form>
+
+<!-- Tabla de tareas -->
+<table class="table table-striped">
+    <thead class="table-dark">
+        <tr>
+            <th>Tarea</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for task in tasks %}
+        <tr>
+            <td>{{ task.title }}</td>
+            <td>
+                {% if task.completed %}
+                    <span class="badge bg-success">Completada</span>
+                {% else %}
+                    <span class="badge bg-warning">Pendiente</span>
+                {% endif %}
+            </td>
+            <td>
+                <a href="{% url 'task_detail' task.id %}" class="btn btn-info btn-sm">Ver</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="3" class="text-center">No hay tareas.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
