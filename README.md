@@ -47,10 +47,10 @@ WEATHER_API_KEY=tuapikey
 ```
 
 ## Uso de la Aplicación
-Iniciar Sesión: Ingresa con el superusuario creado.
-Crear Tareas: Añade una nueva tarea con título, descripción, fecha límite y ciudad.
-Editar y Completar Tareas: Puedes marcar como completada o desmarcarla.
-Consultar Clima: Si la tarea tiene una ciudad, se obtiene el clima desde la api de OpenWeatherMap.
+- Iniciar Sesión: Ingresa con el superusuario creado.
+- Crear Tareas: Añade una nueva tarea con título, descripción, fecha límite y ciudad.
+- Editar y Completar Tareas: Puedes marcar como completada o desmarcarla.
+- Consultar Clima: Si la tarea tiene una ciudad, se obtiene el clima desde la api de OpenWeatherMap.
 
 ## Llenar base de datos para la prueba y uso 
 
