@@ -62,7 +62,7 @@ class WeatherAPITest(TestCase):
     def test_get_weather(self, mock_get):
         """Prueba que se obtiene el clima desde la API externa"""
 
-        # Simulación de respuesta de OpenWeatherMap
+        # Simulación de respuesta de la api
         mock_response = {
             "main": {"temp": 10.5, "humidity": 95},
             "weather": [{"description": "inundación"}]

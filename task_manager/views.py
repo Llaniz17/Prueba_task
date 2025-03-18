@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import ListView, DetailView
-from .models import Task
+from .models import Task, City
 from .forms import TaskForm
 from django.http import HttpResponse
 from rest_framework import viewsets
@@ -81,6 +81,7 @@ class TaskDetailView(DetailView):
                 data = response.json()
 
                 if response.status_code == 200:
+                    City.objects.create(city=task.city) # guarda la ciudad que se llamó 
                     context["weather"] = {
                         "temperature": round(data["temperature"] - 273.15), # se le resta 273.15 para convertir de Kelvin a Celsius, siguiendo la formula
                         "humidity": data["humidity"],
@@ -136,3 +137,10 @@ def mark_task_completed(request, pk):
         return redirect('task_detail', pk=task.pk)
 
     return HttpResponse("Método no permitido", status=405)
+
+
+class CityHistoryView(ListView):
+    model = City
+    template_name = 'cities/history.html'
+    context_object_name = 'cities'
+    ordering = ['-consulted_at']

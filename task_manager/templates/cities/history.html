@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Historial</h2>
+
+    {% if cities %}
+    <table class="table table-striped mt-3">
+        <thead class="table-dark">
+            <tr>
+                <th>Ciudad</th>
+                <th>Fecha de Consulta</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for city in cities %}
+            <tr>
+                <td>{{ city.city }}</td>
+                <td>{{ city.consulted_at|date:"d/m/Y H:i" }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p class="text-muted">No se han realizado consultas daun</p>
+    {% endif %}
+</div>
+{% endblock %}

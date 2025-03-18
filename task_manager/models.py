@@ -10,3 +10,10 @@ class Task(models.Model):
 
     def __str__(self):
         return str(self.title)
+
+class City(models.Model):
+    city = models.CharField(max_length=100)
+    consulted_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.city} - {self.consulted_at.strftime('%Y-%m-%d %H:%M')}"

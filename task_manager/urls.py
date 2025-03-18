@@ -1,4 +1,4 @@
-from .views import TaskListView, TaskDetailView, create_task, mark_task_completed
+from .views import TaskListView, TaskDetailView, create_task, mark_task_completed, CityHistoryView
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from .views import TaskViewSet
@@ -12,4 +12,5 @@ urlpatterns = [
     path('tasks/<int:pk>/', TaskDetailView.as_view(), name='task_detail'),
     path('tasks/create/', create_task, name='create_task'),
     path('tasks/<int:pk>/complete/', mark_task_completed, name='mark_task_completed'),
+    path('cities/history/', CityHistoryView.as_view(), name='city_history'),
 ]
